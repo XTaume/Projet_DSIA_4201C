@@ -1,0 +1,38 @@
+# Dashboard Ligue 1 - Scraping et Analyse
+
+Projet de scraping et visualisation des statistiques des joueurs de Ligue 1 avec Scrapy, PostgreSQL, Streamlit, et Docker.
+
+---
+
+## Prérequis
+
+Avant de commencer, il faut avoir installé :
+
+- Docker et Docker Compose 
+- Python 3.12.17
+
+---
+
+## Lancement du Projet
+
+Placez vous a la racine du projet puis faites :
+
+docker compose up -d
+
+Cela permet de démarrer la base de donnée PostgreSQL, lance la spider pour collecter les données, qui se font automatiquement au chargement de la page, et héberge le dashboard.
+
+Ensuite, pour voir le dashboard, allez sur une page web et mettre dans la barre de recherche :
+
+"http://localhost:8501"
+
+A la fin, pour arreter les conteneurs il faut faire ca :
+
+docker compose down
+
+Pour supprimer les données stockées, il faut faire ca :
+
+docker compose down -v
+
+Pour supprimer les images docker, il faut faire ca :
+
+docker system prune -a

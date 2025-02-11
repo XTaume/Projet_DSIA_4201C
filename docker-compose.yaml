@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  scrapy:
+    build: .
+    container_name: scrapy-container
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: streamlit run Projet_final/main.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=stats_ligue1
+      - DB_USER=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - app-network
+    ports :
+      - "8501:8501"
+
+  db:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: stats_ligue1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
